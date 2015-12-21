@@ -228,7 +228,8 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('nodeunit', 'Run Nodeunit unit tests.', function() {
+  //grunt.registerMultiTask('nodeunit', 'Run Nodeunit unit tests.', function() {
+   grunt.registerMultiTask('test', 'Run Nodeunit unit tests.', function(testName) {
     var done = this.async();
 
     // Merge task-specific and/or target-specific options with these defaults.
@@ -282,6 +283,10 @@ module.exports = function(grunt) {
       grunt.file.mkdir(path.normalize(options.reporterOptions.output));
     }
 
+	if (testName){
+        options.reporterOptions['testspec']= testName;		
+	}
+	
     // Run test(s).
     nodeunit.reporters[options.reporter].run(this.filesSrc, options.reporterOptions, function(err) {
       // Write the output of the reporter if wanted
